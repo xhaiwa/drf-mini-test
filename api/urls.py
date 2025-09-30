@@ -1,13 +1,14 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import health, BookViewSet
+from .views import health, BookViewSet, AuthorViewSet
 
 # Router DRF pour les ViewSets (CRUD automatique)
-router = DefaultRouter()
-router.register(r'books', BookViewSet)
+v1 = DefaultRouter()
+v1.register(r'books', BookViewSet)
+v1.register(r'authors', AuthorViewSet)
 
 # Combiner routes automatiques + route personnalisée
 urlpatterns = [
     path('health/', health),           # route personnalisée
-    path('', include(router.urls)),    # routes CRUD automatiques
+    path('v1/', include(v1.urls)),    # routes CRUD automatiques
 ]
